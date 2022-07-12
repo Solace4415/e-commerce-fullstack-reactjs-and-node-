@@ -8,7 +8,8 @@ import userRoute from "./routes/user.js";
 import authRoute from "./routes/auth.js";
 import productRoute from "./routes/product.js";
 import cartRoute from "./routes/cart.js";
-import orderRoute from "./routes/order.js"
+import orderRoute from "./routes/order.js";
+import stripeRoute from "./routes/stripe.js";
 
 const app = express();
 dotenv.config();
@@ -19,11 +20,12 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use(cors());
 
-app.use("/api/user", userRoute);
+app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
-app.use("/api/orders", orderRoute)
+app.use("/api/orders", orderRoute);
+app.use("/api/checkout", stripeRoute);
 
 mongoose.connect(process.env.CONNECTION_URL);
 

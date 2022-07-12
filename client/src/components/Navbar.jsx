@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import { Badge } from "@material-ui/core";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -28,7 +30,7 @@ const Left = styled.div`
 const Language = styled.span`
   font-size: 14px;
   cursor: pointer;
-  ${mobile({ display: "none"})}
+  ${mobile({ display: "none" })}
 `;
 
 const SearchContainer = styled.div`
@@ -59,7 +61,7 @@ const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  ${mobile({ flex: 2, justifyContent: "center"})}
+  ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
 const MenuItem = styled.div`
@@ -70,13 +72,15 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate();
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input placeholder="Search"/>
+            <Input placeholder="Search" />
             <Search style={{ color: "grey", fontSize: 16 }} />
           </SearchContainer>
         </Left>
@@ -86,8 +90,12 @@ const Navbar = () => {
         <Right>
           <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN </MenuItem>
-          <MenuItem>
-            <Badge badgeContent={4} color="primary" overlap="rectangular">
+          <MenuItem onClick={() => navigate("/cart")}>
+            <Badge
+              badgeContent={cart?.quantity}
+              color="primary"
+              overlap="rectangular"
+            >
               <ShoppingCartOutlined />
             </Badge>
           </MenuItem>
